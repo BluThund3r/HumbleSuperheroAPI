@@ -1,6 +1,5 @@
 import app from "../src/app.js";
 import supertest from "supertest";
-import { heroes } from "../src/routers/heroesRouter.js";
 
 describe("POST /superheroes", () => {
   // Create a server instance that would be initialized before all tests
