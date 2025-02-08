@@ -62,7 +62,7 @@ heroesRouter.post("/", (req, res, next) => {
   };
 
   heroes.push(heroToAdd);
-  res.status(200).send(`Added hero: ${JSON.stringify(heroToAdd)}`);
+  res.status(201).send(JSON.stringify(heroToAdd));
 });
 
 export default heroesRouter;
