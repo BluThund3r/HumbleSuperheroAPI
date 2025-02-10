@@ -1,8 +1,10 @@
 import express from "express";
 const heroesRouter = express.Router();
 
+// The array that would store the superheroes in-memory
 const heroes = [];
 
+// Function that initiates a number sequence; useful for id generation
 function initGenerator() {
   let id = 0;
 
@@ -11,12 +13,33 @@ function initGenerator() {
   };
 }
 
+// Creates the id generator
 const generateID = initGenerator();
 
-heroesRouter.get("/", async (req, res, next) => {
-  // Sort the superheroes by their humility score
-  heroes.sort((a, b) => b.humility - a.humility);
+// Function that finds the right insertion index, so that array remains sorted, based on cmp
+function findInsertPosition(array, obj, cmp) {
+  let start = 0,
+    end = array.length;
 
+  while (start < end) {
+    let mid = Math.floor(start + (end - start) / 2);
+    let compare = cmp(obj, array[mid]);
+
+    if (compare < 0) end = mid;
+    else start = mid + 1;
+  }
+
+  return start;
+}
+
+// Function that inserts object in sorted array, based on cmp
+function insertSorted(array, obj, cmp) {
+  const index = findInsertPosition(array, obj, cmp);
+  array.splice(index, 0, obj);
+}
+
+heroesRouter.get("/", async (req, res, next) => {
+  // The superhero list is already sorted
   res.send(JSON.stringify(heroes));
 });
 
@@ -35,6 +58,7 @@ heroesRouter.post("/", (req, res, next) => {
         "Request body misses properties (name, superpower and humility needed)."
       );
 
+  // Checks the right data types
   if (typeof hero.humility !== "number")
     res.status(400).send("Wrong type for humility (must be a number).");
 
@@ -44,6 +68,7 @@ heroesRouter.post("/", (req, res, next) => {
   if (typeof hero.superpower !== "string")
     res.status(400).send("Wrong type for superpower (must be string).");
 
+  // Data value validation
   if (hero.humility < 1 || hero.humility > 10)
     res.status(400).send("Invalid humility score (must be from 1 to 10).");
 
@@ -61,7 +86,13 @@ heroesRouter.post("/", (req, res, next) => {
     humility: hero.humility,
   };
 
-  heroes.push(heroToAdd);
+  // Insert the hero at the right index, so the array remains sorted
+  insertSorted(
+    heroes,
+    heroToAdd,
+    (obj1, obj2) => obj1.humility > obj2.humility
+  );
+
   res.status(201).send(JSON.stringify(heroToAdd));
 });
 
