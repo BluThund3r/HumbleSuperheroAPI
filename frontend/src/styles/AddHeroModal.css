@@ -1,0 +1,27 @@
+.add-hero-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+  background-color: #313336;
+  width: 30vw;
+  padding: 2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(231, 231, 231);
+  border-radius: 10px;
+}
+
+.add-hero-modal * {
+  color: rgb(231, 231, 231);
+}
+
+.add-hero-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1em;
+}

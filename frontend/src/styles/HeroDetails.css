@@ -1,0 +1,44 @@
+.hero-card {
+  display: flex;
+  text-overflow: elipsis;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 10em;
+  width: 7em;
+  background-color: #343943;
+  border: 2px solid rgb(81, 80, 80);
+  box-shadow: 200 200;
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.hero-card * {
+  text-overflow: elipsis;
+}
+
+.hero-name {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-overflow: elipsis;
+}
+
+.hero-superpower {
+  color: rgb(143, 142, 142);
+  font-size: 1em;
+}
+
+.hero-humility {
+  text-align: end;
+  color: rgb(143, 142, 142);
+  font-size: 0.8em;
+}
+
+.hero-name,
+.hero-superpower,
+.hero-humility {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+}
