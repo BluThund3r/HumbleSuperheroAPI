@@ -34,12 +34,14 @@ function findInsertPosition(array, obj, cmp) {
 
 // Function that inserts object in sorted array, based on cmp
 function insertSorted(array, obj, cmp) {
-  const index = findInsertPosition(array, obj, cmp);
+  let index = 0;
+  if (array.length > 0) index = findInsertPosition(array, obj, cmp);
   array.splice(index, 0, obj);
 }
 
 heroesRouter.get("/", async (req, res, next) => {
   // The superhero list is already sorted
+  console.log("GET HEROES: ", heroes);
   res.send(JSON.stringify(heroes));
 });
 
@@ -90,9 +92,10 @@ heroesRouter.post("/", (req, res, next) => {
   insertSorted(
     heroes,
     heroToAdd,
-    (obj1, obj2) => obj1.humility > obj2.humility
+    (obj2, obj1) => obj1.humility - obj2.humility
   );
 
+  console.log("HEROES: ", heroes);
   res.status(201).send(JSON.stringify(heroToAdd));
 });
 
